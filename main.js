@@ -195,8 +195,8 @@ function drawLabel(text) {
 }
 
 const label1 = drawLabel("Olympus Mons");
-label1.position.set(2.8, 1.3, -2.8);
-scene.add(label1);
+label1.position.set(-4.3, 2.1, -1.44);
+scene.add(label1)
 labelGroup.add(label1);
 
 /* ---------- GIZMO (TOP-LEFT WITH X/Y/Z LABELS) ---------- */
@@ -358,7 +358,7 @@ gltfLoader.load(
 
     // масштаб/позиция по желанию
     model.position.set(0, 0, 0);
-    model.scale.set(15, 15, 15);
+    model.scale.set(0.9, 0.9, 0.9);
 
     // чтобы тени работали (если включишь)
     model.traverse((obj) => {
