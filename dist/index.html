@@ -97,38 +97,21 @@ canvas.webgl {
  }
 
 @media (max-width: 768px) {
-  .lighting-panel {
-    width: 220px;
-    padding: 15px;
-  }
-  
-  .section-title, 
-  .control-row, 
-  .value-display, 
-  .checkbox-row {
-    font-size: 14px !important;
-  }
-
-  .control-input input[type="range"] {
-    height: 12px;
-  }
-  
-  .control-input input[type="range"]::-webkit-slider-thumb {
-    width: 18px;
-    height: 22px;
-  }
-
-  .zoom-panel {
-    width: 60px;
-    height: 120px;
-  }
-  
-  .compass-button {
-    width: 60px;
-    height: 60px;
-    top: 280px;
-  }
-}
+        .control-bar {
+          bottom: 30px;
+          padding: 15px 25px;
+          border-radius: 24px;
+        }
+        .buttons-container {
+          gap: 25px;
+        }
+        .buttons-container button {
+          width: 75px;
+          height: 75px;
+          font-size: 45px;
+          border-radius: 18px;
+        }
+      }
 
 
     </style>
