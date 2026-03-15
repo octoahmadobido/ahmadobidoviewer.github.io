@@ -96,6 +96,30 @@ canvas.webgl {
     border: 2px solid rgba(137, 137, 137, 0.33);
  }
 
+@media (max-width: 768px) {
+  .lighting-panel {
+    width: auto;
+    left: 20px; 
+    top: 10px;
+    padding: 8px;
+    font-size: 10px;
+  }
+
+  .control-row {
+    grid-template-columns: 80px 1fr;
+    gap: 5px;
+  }
+
+ 
+  input[type="range"] {
+    height: 15px; 
+  }
+
+  .zoom-panel, .compass-button {
+    left: 10px;
+  }
+}
+
 
     </style>
     <script type="module" crossorigin src="/website-marsviewer/assets/index-EChjtaK_.js"></script>
