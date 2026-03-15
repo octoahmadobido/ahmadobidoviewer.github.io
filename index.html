@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ThreeJS Viewport</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+      background: #000;
+      user-select: none;
+    }
+
+    canvas.webgl {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 0;
+    }
+
+    /* ==== RIGHT PANEL ==== */
+
+    .lighting-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 12px;
+      z-index: 10;
+
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      background: #2f2f2f;
+      border-radius: 8px;
+      border: 1px solid #555;
+      color: #f0f0f0;
+      user-select: none;
+    }
+
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: 4px;
+      margin-bottom: 2px;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      column-gap: 8px;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .control-label {
+      opacity: 0.9;
+    }
+
+    .control-input {
+      display: grid;
+      grid-template-columns: 1fr 40px;
+      align-items: center;
+      background: #4c4c4c92;
+      border-radius: 3px;
+      border: 1px solid #707070;
+      padding: 2px 4px;
+    }
+
+    .control-input input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: #2b2b2b;
+      outline: none;
+      border-radius: 2px;
+    }
+
+    .control-input input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 14px;
+      background: #d0d0d0;
+      cursor: pointer;
+      border-radius: 2px;
+      border: 1px solid #000;
+    }
+
+    .control-input input[type="range"]::-moz-range-thumb {
+      width: 10px;
+      height: 14px;
+      background: #d0d0d0;
+      cursor: pointer;
+      border-radius: 2px;
+      border: 1px solid #000;
+    }
+
+    .value-display {
+      text-align: right;
+      font-size: 11px;
+      padding-left: 4px;
+      opacity: 0.9;
+      white-space: nowrap;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .checkbox-row input {
+      cursor: pointer;
+      accent-color: rgba(11, 108, 161, 0.78);
+    }
+    
+
+    /* ==== Zoom buttons under gizmo ==== */
+
+    .zoom-panel {
+      position: fixed;
+      /* Centered under 110px gizmo starting at 16px: 16 + 110/2 - 50/2 = 46 */
+      left: 46px;
+      top: 140px; /* 16 margin + 110 gizmo + small gap */
+      width: 50px;
+      height: 100px;
+      z-index: 10;
+
+      display: flex;
+      flex-direction: column;
+
+      background: rgba(34, 34, 34, 0.81);
+      border-radius: 3px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5.2px);
+      -webkit-backdrop-filter: blur(5.2px);
+      border: 2px solid rgba(80, 80, 80, 0.33);
+      overflow: hidden;
+    }
+
+    .zoom-button {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: aliceblue;
+      font-size: 20px;
+      font-weight: 300;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transform: scale(1);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .zoom-button + .zoom-button {
+      border-top: 1px solid rgba(137, 137, 137, 0.4);
+    }
+
+    .zoom-button:hover {
+      transform: scale(1.05);
+      background: rgba(11, 108, 161, 0.78);
+    }
+
+    .compass-button {
+    position: fixed;
+    left: 46px;
+    top: 250px; /* just above zoom panel */
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    color: aliceblue;
+    cursor: pointer;
+    z-index: 10;
+
+    background: rgba(34, 34, 34, 0.81);
+    border-radius: 3px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 2px solid rgba(80, 80, 80, 0.33);
+
+    transition: transform .2s ease, background .2s ease;
+  }
+
+  .compass-button:hover {
+    transform: scale(1.08);
+    background: rgba(11, 108, 161, 0.78);
+  }
+  </style>
+</head>
+
+<body>
+  
+  <canvas class="webgl"></canvas>
+
+  <!-- Right control panel -->
+  <div class="lighting-panel">
+    <div class="section-title">Lighting</div>
+
+    <div class="control-row">
+      <div class="control-label">Light rotation</div>
+      <div class="control-input">
+        <input type="range" min="0" max="360" value="45" class="light-rotation" />
+        <span class="value-display light-rotation-value">45°</span>
+      </div>
+    </div>
+
+    <div class="control-row">
+      <div class="control-label">Light intensity</div>
+      <div class="control-input">
+        <input type="range" min="0" max="5" step="0.1" value="3" class="light-intensity" />
+        <span class="value-display light-intensity-value">3.0</span>
+      </div>
+    </div>
+
+    <div class="section-title">Model rotation</div>
+
+    <div class="control-row">
+      <div class="control-label">Rotate X</div>
+      <div class="control-input">
+        <input type="range" min="0" max="360" value="0" class="model-rot-x" />
+        <span class="value-display model-rot-x-value">0°</span>
+      </div>
+    </div>
+
+    <div class="control-row">
+      <div class="control-label">Rotate Y</div>
+      <div class="control-input">
+        <input type="range" min="0" max="360" value="0" class="model-rot-y" />
+        <span class="value-display model-rot-y-value">0°</span>
+      </div>
+    </div>
+
+    <div class="control-row">
+      <div class="control-label">Rotate Z</div>
+      <div class="control-input">
+        <input type="range" min="0" max="360" value="0" class="model-rot-z" />
+        <span class="value-display model-rot-z-value">0°</span>
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" class="axes-toggle" checked />
+      <span>Show axes</span>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" class="auto-rotate-toggle">
+      <span>Auto rotate</span>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" class="labels-toggle" checked />
+      <span>Show labels</span>
+    </div>
+
+  </div>
+
+  <!-- Vertical zoom pill under gizmo -->
+  <div class="zoom-panel">
+    <button class="zoom-button zoom-in">+</button>
+    <button class="zoom-button zoom-out">−</button>
+  </div>
+
+  <!-- Compass Reset Button -->
+  <div class="compass-button">
+    ↑
+    ↓
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>

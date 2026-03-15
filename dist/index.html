@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>DIASJD9IAJi</title>
+    <style>
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+    background: #000;
+}
+
+canvas.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    z-index: 0;
+}
+
+.ui {  /* NA POTOM */
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* Anchor point */
+
+    display: flex;
+    z-index: 10;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons-container button {
+    width: 50px;
+    height: 50px;
+    color: aliceblue;
+    font-weight: 300;
+    transform: scale(1);
+    transition: transform 0.5s ease;
+    cursor: pointer;
+
+    background: rgba(34, 34, 34, 0.81);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 2px solid rgba(80, 80, 80, 0.33);
+}
+
+.buttons-container button:hover {
+    transform: scale(1.10);
+    color: aliceblue;
+    font-weight: 300;
+
+    background: rgba(137, 137, 137, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.2px);
+    -webkit-backdrop-filter: blur(10.2px);
+    border: 1px solid rgba(137, 137, 137, 0.562);
+}
+
+.control-bar {
+    position: fixed;
+    bottom: 5px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(50vw, 600px);
+    height: min(2vw, 35px);
+
+    padding: 14px 15px;
+    z-index: 5;
+
+    
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #4d4d4d;
+    background: linear-gradient( rgb(46, 46, 46) 0%, rgba(102, 102, 102, 0.63) 100%);
+    border-radius: 7px;
+    box-shadow: 0 4px 30px rgba(129, 129, 129, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 2px solid rgba(137, 137, 137, 0.33);
+ }
+
+
+    </style>
+    <script type="module" crossorigin src="/website-marsviewer/assets/index-EChjtaK_.js"></script>
+  </head>
+  <body>
+    <canvas class="webgl"></canvas>
+    
+<div class="ui">
+<div class="control-bar">
+  <div class="buttons-container">
+    <button class="zoom-in">
+      <span>+</span>
+    </button>
+
+    <button class="zoom-out">
+      <span>-</span>
+    </button>
+  </div>
+</div>
+</div>
+  </body>
+</html>
