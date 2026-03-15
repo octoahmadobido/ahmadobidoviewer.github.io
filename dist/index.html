@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>DIASJD9IAJi</title>
+    <title>Welcome</title>
     <style>
 
 body {
@@ -98,31 +98,41 @@ canvas.webgl {
 
 @media (max-width: 768px) {
   .lighting-panel {
-    width: auto;
-    left: 20px; 
-    top: 10px;
-    padding: 8px;
-    font-size: 10px;
+    width: 220px;
+    padding: 15px;
+  }
+  
+  .section-title, 
+  .control-row, 
+  .value-display, 
+  .checkbox-row {
+    font-size: 14px !important;
   }
 
-  .control-row {
-    grid-template-columns: 80px 1fr;
-    gap: 5px;
+  .control-input input[type="range"] {
+    height: 12px;
+  }
+  
+  .control-input input[type="range"]::-webkit-slider-thumb {
+    width: 18px;
+    height: 22px;
   }
 
- 
-  input[type="range"] {
-    height: 15px; 
+  .zoom-panel {
+    width: 60px;
+    height: 120px;
   }
-
-  .zoom-panel, .compass-button {
-    left: 10px;
+  
+  .compass-button {
+    width: 60px;
+    height: 60px;
+    top: 280px;
   }
 }
 
 
     </style>
-    <script type="module" crossorigin src="/website-marsviewer/assets/index-EChjtaK_.js"></script>
+    <script type="module" crossorigin src="/main.js"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
